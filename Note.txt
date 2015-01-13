@@ -15,3 +15,23 @@
         digits[0] = (digits[0]+addone)%10;
         if(digits[0]+addone >=10 )
             digits.insert(digits.begin(),1);
+
+
+--------------------
+39_CombinationSum
+--------------------
+动归，但需注意：
+
+1. target = 0时，插入解集合为空： 
+                  
+               vector<vector<vector<int>>> targetArray(target+1, vector<vector<int>>());//此时target[xx].size()都为0
+               target[0].push_back(vector<int>());//此时target[0].size()为1；
+
+2. 动归实现：（法1）外层target,里层candidates; （法2）外层candidates,内层target；
+               
+              不同的循环会导致最后的解集不一样，在本题中法1会在解集中包含重复的结果，如（2，1），（1，2）；但是法2就不会
+
+3. 易错点：  在内层循环后，动作是在尾部追加，而不是 targetArray[i] = tp; 当然targetArray[i].push_back(tp);也不对，
+
+             因此只能用targetArray[i].insert(targetArray[i].end(),tp.begin(),tp.end());
+                
