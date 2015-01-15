@@ -34,4 +34,34 @@
 3. 易错点：  在内层循环后，动作是在尾部追加，而不是 targetArray[i] = tp; 当然targetArray[i].push_back(tp);也不对，
 
              因此只能用targetArray[i].insert(targetArray[i].end(),tp.begin(),tp.end());
+
+--------------------
+169_MajorityElement
+--------------------
+Solution1: 基于排序，满足条件的element一定在中间位置，注意中间位置的表示
+Solution2: Find k different element, and "remove" them as a group, 
+           the remaining element must be the element that appears more than ⌊n/k⌋ times. 
+           在本例中k=2, 因此我们通过一个nTimes/nGroups来表示组号，nGroup=0时选定一个candidate,
+           一旦一个值与candidate相等，那么就nGroups++, 发现不等，就nGroup--。最后留下的candidate就是所求element.
+
+           如果扩展一下，k=3, 则我们在nGroup=0时选定一个cadidate, 发现后面两个值都与它相等，那么nGroups++,后面两个都不等--。
+           最后留下的candidate即为所求。 在实现上，会麻烦一点，应该要用到两个指针。
+
+
+--------------------
+164_MaximumGap
+--------------------
+Solution1: 基数排序，问题在于基数用多少呢？【1，10000000】这种情况，显然基数排序的效率并不高
+
+Solution2: 类桶排序，原始思路是：暂先不考虑空间复杂度，首先找到num中最大的值A，然后申请一块空间X【0，A】。
+           遍历一遍num， 将X[num]上的值变为1，最后遍历X找到相邻1之间的最大Gap。
+
+           此方法对空间复杂度比较高，进一步优化，使用桶。利用鸽巢原理，最大gap的最小值为(max-min)/(len-1);
+           
+           
+-----------------------------------
+153_FindMinimumInRotatedSortedArray
+-----------------------------------
+Solution: 我默认的是数组是升序的，针对降序代码无效。思路：num[0]要大于截断的片段，所以二分时，可以通过当前值与num[0]
+          比较得到应该是选择左边还是右边二分
                 
